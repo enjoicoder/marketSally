@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+   PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<!-- 이 문서는 ibatis에서 처리할 SQL문을 작성하는 문서입니다. -->
+<sqlMap namespace="member">
+
+   <select id = "searchID" resultClass="string" parameterClass="string">
+      select mem_logid from member where mem_logid = #data#   
+   </select>
+   
+   <select id = "searchEmail" resultClass="string" parameterClass="string">
+      select mem_email from member where mem_email = #data#   
+   </select>
+   
+   <insert id="joinMember" parameterClass="MemberVO">
+      insert into member
+      values(mem_id_seq.nextval, #mem_logid#, #mem_pass#, #mem_name#, #mem_email#, #mem_grade#, #mem_tel#, #mem_add#, #mem_gender#, #mem_bir#, sysdate, #mem_point#)
+   </insert>
+   
+   <select id = "compareDBToLogin" parameterClass="MemberVO" resultClass="MemberVO">
+      select * from member where mem_logid = #mem_logid# and mem_pass = #mem_pass#
+   </select>
+
+	<select id = "checkPass" parameterClass="string" resultClass="string">
+		select mem_pass from member where mem_pass = #data#
+	</select>
+	
+	<update id="updateMember" parameterClass="MemberVO">
+		update member set mem_pass = #mem_pass#, mem_email = #mem_email#,  mem_add = #mem_add#
+		where mem_logid = #mem_logid#
+	</update>
+	
+   <select id = "findIdSally" resultClass="string" parameterClass="MemberVO">
+      select mem_logid from member where mem_name = #mem_name# and mem_email = #mem_email#
+   </select>
+	
+   <select id = "findPassSally" resultClass="string" parameterClass="MemberVO">
+      select mem_pass from member where mem_logid = #mem_logid# and mem_email = #mem_email#
+   </select>
+   
+	<update id="updatePass" parameterClass="MemberVO">
+		update member set mem_pass = #mem_pass#
+		where mem_logid = #mem_logid# and mem_email = #mem_email#
+	</update>
+	
+</sqlMap>

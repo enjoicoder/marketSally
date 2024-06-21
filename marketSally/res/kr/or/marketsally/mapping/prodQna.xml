@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="prodQna">
+
+	<!-- 상품QnA 리스트 출력 -->
+	<select id = "selectProdQnaList" resultClass="ProdQnaVO" parameterClass="ProdQnaVO">
+		SELECT Q.*, MEM_NAME, PROD_IMG, PROD_NAME
+		FROM PRODQNA Q, MEMBER M, PROD P 
+		WHERE Q.MEM_ID = M.MEM_ID
+		AND Q.PROD_ID = P.PROD_ID
+		<!-- 상품 하나의 QNA리스트 -->
+		<isNotNull prepend="AND" property="prod_id">
+			P.PROD_ID = #prod_id#
+		</isNotNull >
+		<!-- 회원의 QNA리스트 -->
+		<isNotNull prepend="AND" property="mem_id">
+			Q.MEM_ID = #mem_id#
+		</isNotNull >
+	</select>
+	
+	<!-- 상품QnA 객체 출력 -->
+	<select id="selectProdQna" resultClass="ProdQnaVO" parameterClass="ProdQnaVO">
+		SELECT * FROM PRODQNA 
+		WHERE MEM_ID = #mem_id#
+		AND PROD_ID = #prod_id#
+	</select>
+	
+	<!-- 상품QnA 추가 -->
+	<insert id="insertProdQna" parameterClass="ProdQnaVO">
+		INSERT INTO PRODQNA(PROD_ID, MEM_ID, PRQA_TITLE, PRQA_QCONT, PRQA_STATUS ,PRQA_QDATE) 
+		VALUES (#prod_id#, #mem_id#, #prqa_title#, #prqa_qcont#, '답변대기', sysdate)
+	</insert>
+	
+	<!-- 상품QnA 삭제 -->
+	<delete id="deleteProdQna" parameterClass="ProdQnaVO">
+		DELETE FROM PRODQNA 
+		WHERE MEM_ID = #mem_id# 
+		AND PROD_ID = #prod_id#
+	</delete>
+	
+	<!-- 상품QnA 수정 -->
+	<update id="updateProdQna" parameterClass="ProdQnaVO">
+		UPDATE PRODQNA 
+		SET PRQA_TITLE = #prqa_title#, PRQA_QCONT = #prqa_qcont#, PRQA_QDATE = sysdate
+		WHERE MEM_ID = #mem_id#
+		AND PROD_ID = #prod_id#
+	</update>
+
+	<!-- 상품QnA 답변 -->
+	<update id="answerProdQna" parameterClass="ProdQnaVO">
+		UPDATE PRODQNA 
+		SET PRQA_ACONT = #prqa_acont#, PRQA_STATUS = '답변완료', PRQA_ADATE = sysdate
+		WHERE MEM_ID = #mem_id#
+		AND PROD_ID = #prod_id#
+	</update>
+</sqlMap>

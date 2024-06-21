@@ -1,0 +1,25 @@
+#mypage-header {
+	background: #f7f7f7;
+	height: 250px;
+	-ms-user-select: none;
+	-moz-user-select: -moz-none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	user-select: none;
+}
+
+.mypage-header-box {
+	background: white;
+	height: 200px;
+}
+
+.mypage-grade {
+	border: 1px solid purple;
+	border-radius: 4px;
+	color: purple;
+	width: 45px;
+	height: 45px;
+	font-size: 0.9em;
+	text-align: center;
+	line-height: 45px;
+}

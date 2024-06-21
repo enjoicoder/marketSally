@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="review">
+
+	<!-- 멤버의 리뷰작성여부 확인 -->
+	<select id = "selectMyReview" resultClass="int" parameterClass="ReviewVO">
+		SELECT COUNT(*) FROM REVIEW 
+		WHERE MEM_ID= #mem_id# 
+		AND PROD_ID = #prod_id#
+	</select>
+	
+	<!-- 리뷰 리스트 출력 -->
+	<select id="selectReviewList" resultClass="ReviewVO" parameterClass="String">
+		SELECT ROWNUM NUM, A.*
+		FROM(SELECT R.*, M.MEM_NAME FROM REVIEW R, MEMBER M
+     		WHERE R.MEM_ID = M.MEM_ID
+            AND PROD_ID = #prod_id# 
+     		ORDER BY REVIEW_DATE DESC) A
+	</select>
+	
+	<!-- 리뷰추가 -->
+	<insert id="insertReview" parameterClass="ReviewVO">
+		INSERT INTO REVIEW VALUES (#review_cont#, #review_img#, sysdate, #mem_id#, #prod_id#, #review_title#)
+	</insert>
+	
+	<!-- 리뷰삭제 -->
+	<delete id="deleteReview" parameterClass="ReviewVO">
+		DELETE FROM REVIEW 
+		WHERE MEM_ID = #mem_id# 
+		AND PROD_ID = #prod_id#
+	</delete>
+	
+	<!-- 상품구매했는지 확인 -->
+	<select id="purchasedCheck" parameterClass="map" resultClass="int">
+		SELECT COUNT(*) cnt
+		FROM CART C , ORDER_DETAIL O, PROD P
+		WHERE NOT(C.CART_ID = (SELECT MAX(CART_ID) 
+				FROM CART 
+				WHERE MEM_ID = #mem_id#)
+		        ) 
+		AND C.CART_ID = O.CART_ID
+		AND P.PROD_ID = O.PROD_ID
+		AND MEM_ID = #mem_id#
+        AND P.PROD_ID = #prod_id#
+	</select>
+</sqlMap>

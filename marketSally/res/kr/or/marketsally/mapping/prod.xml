@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+	<!-- <typeAlias alias="ProdVO" type="kr.or.marketsally.product.vo.ProdVO"/>  -->
+	
+<sqlMap namespace="sallyProd">
+
+	<!-- 전체 상품 list 가져오기 [ProdList.do] -->
+	<select id="getAllProdList" resultClass="ProdVO">
+		select  p.prod_id, p.prod_name, prod_price, p.prod_img, 
+				p.prod_cont, p.lprod_id, to_char(p.prod_date,'YYYY-MM-DD') prod_date, l.lprod_name 
+		  from  prod p, lprod l
+	      where p.lprod_id = l.lprod_id
+	</select>
+	
+	<!-- 선택한 하나의 상품 가져오기 [ProdDetail.do] -->
+	<select id = "getProd" resultClass="ProdVO" parameterClass="string">
+		select * from prod where prod_id = #prod_id#
+	</select>
+	
+	<!-- 선택한 분류에 맞게 상품 list 가져오기 [ProdList_Lprod.do]-->
+	<select id="prodofLprod" resultClass="ProdVO" parameterClass="string">
+		select * from prod where lprod_id = #lprod_id#
+	</select>
+	
+	<!-- 선택한 상품분류의 상품명 가져오기 [ProdList_Lprod.do]-->
+	<select id="getLprodName" resultClass="string" parameterClass="string">
+		select lprod_name from lprod where lprod_id = #lprod_id#
+	</select>
+
+	<!-- 상품등록 - 관리자  [ProdInsert.do] -->
+	<insert id="insertProd" parameterClass="ProdVO">
+		insert into prod values( #prod_id#, #prod_name#, #prod_price#, #prod_img#, #prod_cont#, #lprod_id#, sysdate )
+	</insert>
+	
+	<!-- 상품수정 - 관리자 [ProdUpdate.do] -->
+	<update id="updateProd" parameterClass="ProdVO">
+		update prod set prod_id= #prod_id#, prod_name=#prod_name#,
+						 prod_price= #prod_price#, prod_img=#prod_img#, 
+						 prod_cont=#prod_cont#, lprod_id=#lprod_id#, prod_date=#prod_date#
+		where prod_id = #prod_id#
+	</update>
+	
+	<!-- 상품삭제 - 관리자 [ProdDelete.do] -->
+	<delete id="deleteProd" parameterClass="string">
+		delete from prod where prod_id=#prod_id#
+	</delete>
+	
+	<!-- 상품검색 [ProdSearch.do] -->
+	<select id="searchProd" parameterClass="string" resultClass="ProdVO">
+		select * from prod where prod_name like '%'||#prod_name#||'%'
+	</select>
+	
+	<!-- 상품검색 건수 조회 [ProdSearch.do] -->
+	<select id="searchProdCnt" parameterClass="string" resultClass="int">
+		select count(*) from prod where prod_name like '%'||#prod_name#||'%'
+	</select>
+	
+	<!-- 상품조회 건수 조회 [ProdList.do] [ProdList_Lprod.do] -->
+	<select id="getProdCnt" parameterClass="string" resultClass="int">
+		select count(*) from prod where lprod_id like '%'||#lprod_id#||'%'
+	</select>	
+	
+	<!-- 구매했던 상품 찾기 (현재장바구니를 제외한 장바구니들의 상품들 정보찾기) -->
+	<select id="getPurchasedProd" resultClass="ProdVO" parameterClass="string" >
+		SELECT DISTINCT P.PROD_ID , PROD_NAME, PROD_PRICE, PROD_IMG
+		FROM CART C , ORDER_DETAIL O, PROD P
+		WHERE NOT(C.CART_ID = (SELECT MAX(CART_ID) 
+				FROM CART 
+				WHERE MEM_ID = #mem_id#)
+		        ) 
+		AND C.CART_ID = O.CART_ID
+		AND P.PROD_ID = O.PROD_ID
+		AND MEM_ID = #mem_id#
+	</select>
+</sqlMap>

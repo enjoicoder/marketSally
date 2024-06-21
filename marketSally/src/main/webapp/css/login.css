@@ -1,0 +1,27 @@
+.divider:after, .divider:before {
+	content: "";
+	flex: 1;
+	height: 1px;
+	background: #eee;
+}
+
+#loginBtn {
+	background: #5f0080;
+	border-color: #5f0080;
+	font-size: 15px;
+	font-weight: bold;
+}
+
+#loginJoin {
+	color: #5f0080;
+	background: white;
+	border-color: #5f0080;
+	font-size: 15px;
+	font-weight: bold;
+}
+
+#login-id, #login-pass{
+	padding: 25px 20px;
+	font-size: 15px;
+	font-weight: bold;
+}

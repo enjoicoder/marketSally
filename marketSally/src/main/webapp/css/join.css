@@ -1,0 +1,36 @@
+.page_article{
+	width: 60%; 
+	
+}
+
+.error {
+	color: red;
+	display: none;
+	padding-left: 190px;
+	font-size: 0.8em;
+}
+
+#exmaple_eamil.error {
+	color: black;
+}
+
+#addressNo{
+cursor : pointer;
+}
+
+.member_join label{
+	font-size: 0.8em;
+	padding-left: 33px;
+	font-weight: 700;
+}
+
+.member_join .form-group{
+	margin-bottom: 25px;
+}
+#idCheck.btn.default, #emailCheck.btn.default, #addressNo.btn.default {
+	cursor: pointer;
+	border: 1px solid #5f0080;
+	color: #5f0080;
+	font-weight: bold;
+	font-size: 0.8em;
+}

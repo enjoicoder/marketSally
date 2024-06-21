@@ -1,0 +1,51 @@
+.icon:hover {
+	color: #5f0080;
+}
+
+#logoimg {
+	width: 130px;
+	height: 130px;
+}
+
+#navbarBack {
+	background-color: white;
+}
+.navbar-nav .dropdown-toggle::after {
+    display: none;
+}
+.link_menu {
+	color: black;
+	font-size: 12px;
+	font-weight: 500;
+	transition: 1s ease;
+}
+
+.dropfont {
+	color: black;
+	font-size: 12px;
+	font-weight: 500;
+	transition: 1s ease;
+}
+
+.dropdown-toggle::after {
+	transition: transform 0.15s linear;
+}
+
+.show.dropdown .dropdown-toggle::after {
+	transform: translateY(3px);
+}
+
+.dropdown-menu {
+	margin-top: 0;
+	z-index: 4000;
+} /* hover 메뉴때문에 넣음 */
+
+/* 검색버튼 */
+#headerSearch{
+	color:#5f0080;
+	border-color: #5f0080;
+}
+#headerSearch:hover{
+	color:white;
+	background-color: #5f0080;
+}

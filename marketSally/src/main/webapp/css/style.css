@@ -1,0 +1,101 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Noto+Sans+KR&display=swap');
+@import url("/marketsally/css/header.css");
+@import url("/marketsally/css/index.css");
+@import url("/marketsally/css/login.css");
+@import url("/marketsally/css/join.css");
+@import url("/marketsally/css/notice.css");
+@import url("/marketsally/css/detail.css");
+@import url("/marketsally/css/products_detail.css");
+@import url("/marketsally/css/cart.css");
+@import url("/marketsally/css/product_list.css");
+@import url("/marketsally/css/admin_product.css");
+@import url("/marketsally/css/mypage.css");
+@import url("/marketsally/css/mypage_order_detail.css");
+@import url("/marketsally/css/mypage_order.css");
+
+
+/* 적용범위가 매우 큰 태그 css 혹은 유틸적 css는 여기에 주석이랑 적어주세요 */
+
+/* 사이트 글꼴 설정 */
+h1, h2, h3, h4{
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+body{
+	font-family: 'Nanum Gothic', sans-serif;
+}
+
+/* 수직선 */
+.v-line{
+	border-top: 2px solid black;
+}
+
+/* 작고 회색 설명글 */
+.info {
+	color: #828282;
+	font-size: 0.9em;
+	line-height: 15px;
+}
+.thick {
+	color: #3c3c3c;
+	font-weight: 600;
+	font-size: 1.0em;
+	padding: 15px;
+}
+.purple {
+	color: #5f0080;
+	font-weight: 600;
+	font-size: 0.9em;
+}
+
+/* 흰색 버튼 */
+.b-btn{
+ border : 1px solid #828282;
+ background-color: white;
+ font-weight: 600;
+ font-size: 1em;
+}
+
+/* 부트스트랩 보라색 버튼 커스텀 */
+/* 사용법 : 버튼클래스 넣는다 btn-purple btn btn-outline-primary */
+.btn-purple{
+	border-color: #5f0080;
+	color: #5f0080;
+}
+.btn-purple:hover{
+	border-color: #5f0080;
+	background: #5f0080;
+}
+
+/* 색 최우선 설정 호버시도 변하지 않음 */
+.text-color-purple {
+	color: #5f0080 !important;
+}
+
+.text-color-black {
+	color: black !important;
+}
+
+.text-color-red {
+	color: red !important;
+}
+
+
+/* 링크 밑줄삭제 밑 검정색 */
+a, a:visited {
+	text-decoration: none;
+	color: black;
+} 
+
+/* 장바구니 추가알람창 이미지크기 */
+#toast-img{
+	width : 45px;
+	height: 60px
+}
+
+.prodQna{
+	font-size: 1.2em;
+	font-weight: bold;	 
+	background: #f7f7f7;
+}

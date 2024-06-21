@@ -1,0 +1,27 @@
+.mypage-order table {
+	margin: 70px auto;
+	border: none;
+	border-collapse: collapse;
+	text-align: left;
+	line-height: 30px;
+}
+
+.mypage-order th {
+	text-align: left;
+	border-bottom: 1px solid #dcdcdc;
+	font-size: 1.0em;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-left: none;
+	padding-right: none;
+}
+
+.mypage-order td {
+	border-top: 1px solid #dcdcdc;
+	text-align: left;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: none;
+	padding-right: none;
+	font-size: 0.9em;
+}

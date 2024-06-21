@@ -1,0 +1,24 @@
+.mypage-order-detail table {
+	margin: 70px auto;
+	border: none;
+	border-collapse: collapse;
+	border-bottom: 1px solid #dcdcdc;
+	text-align: left;
+	line-height: 30px;
+}
+
+.mypage-order-detail td {
+	text-align: left;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: none;
+	padding-right: none;
+	font-size: 0.9em;
+}
+
+.mypage-order-detail thick {
+	color: #3c3c3c;
+	font-weight: 600;
+	font-size: 1.0em;
+	padding: 15px;
+}

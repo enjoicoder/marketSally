@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<!-- 이 문서는 ibatis에서 처리할 SQL문을 작성하는 문서입니다. -->
+<sqlMap namespace="orders">
+
+	<!-- 주문추가 반환값 : 주문번호 -->
+	<insert id="insertOrders" parameterClass="OrdersVO">
+		INSERT INTO ORDERS(ORDER_ID, MEM_ID, ORDER_DATE, ORDER_ADD, ORDER_STATUS, CART_ID) 
+		VALUES (order_id_seq.nextval, #mem_id#, SYSDATE, #order_add#, '주문완료', #cart_id#)
+		
+		<!-- result결과값을 생성 한다 -->
+        <selectKey keyProperty="order_id" resultClass="string">
+        	select order_id from orders where order_id = 
+        	(select max(order_id) order_id from orders where MEM_ID = #mem_id# )
+        </selectKey>
+        
+	</insert>
+
+	<!-- 결제 추가 -->	
+	<insert id="insertPayment" parameterClass="PaymentVO">
+		INSERT INTO PAYMENT (ORDER_ID, PAY_AMOUNT, PAY_METHOD, PAY_DATE, PAY_POINT)
+		VALUES(#order_id#, #pay_amount#, '카카오페이', SYSDATE, #pay_point#)
+	</insert>
+
+
+	<!-- 나중에 cart랑 member로 옮겨야 할듯 -->
+	<!-- 회원 다음 장바구니 추가 -->	
+	<insert id="insertCart" parameterClass="String">
+		INSERT INTO cart(MEM_ID, CART_ID)
+		VALUES (#mem_id#, 
+        (select nvl(max(cart_id)+1 ,1) from cart)
+		)
+	</insert>
+
+	<!-- 멤버 포인트 적립 -->
+	<update id="updateMemberPoint" parameterClass="map">
+		UPDATE MEMBER 
+		SET MEM_POINT = MEM_POINT + #add_point# - #pay_point#
+		WHERE MEM_ID = #mem_id#
+	</update>
+	
+	<!-- 마이페이지 주문내역 리스트 -->
+	<select id="getMyOrdersList" parameterClass="String" resultClass="MyPageOrdersVO">
+		SELECT ORDER_ID, ORDER_DATE, ORDER_STATUS, PAY_AMOUNT, PAY_METHOD, CNT, PROD_IMG, PROD_NAME
+		FROM(
+	    SELECT O.ORDER_ID, O.ORDER_DATE, O.ORDER_STATUS, P.PAY_AMOUNT, P.PAY_METHOD, MAX(PR.PROD_ID) PROD_ID, COUNT(PR.PROD_ID)-1 CNT
+	    FROM ORDERS O , PAYMENT P , ORDER_DETAIL D, PROD PR
+	    
+	    WHERE P.ORDER_ID = O.ORDER_ID
+	    AND O.CART_ID = D.CART_ID
+	    AND PR.PROD_ID= D.PROD_ID
+	    AND MEM_ID = #mem_id#
+	    
+	    GROUP BY O.ORDER_ID, O.ORDER_DATE, O.ORDER_STATUS, P.PAY_AMOUNT, P.PAY_METHOD
+	    ) A, PROD B
+		WHERE B.PROD_ID = A.PROD_ID
+	</select>
+	
+	<!-- 마이페이지 주문상세 상품들 -->
+	<select id="getMyOrderProdList" parameterClass="String" resultClass="CartVO">
+		SELECT  O.PROD_ID, O.ORDER_DETAIL_QTY, P.PROD_NAME, P.PROD_IMG, P.PROD_PRICE
+			FROM ORDER_DETAIL O, CART C, PROD P, ORDERS OS
+			WHERE O.CART_ID = C.CART_ID
+			AND P.PROD_ID = O.PROD_ID
+	        AND OS.CART_ID = C.CART_ID
+	        AND OS.ORDER_ID = #order_id#	
+	</select>
+	
+	<!-- 주문찾기 -->
+	<select id="selectOrders" parameterClass="String" resultClass="OrdersVO">
+		SELECT * from orders where order_id = #order_id#
+	</select>
+	
+	<!-- 결제찾기 -->
+	<select id="selectPayment" parameterClass="String" resultClass="PaymentVO">
+		SELECT * from payment where order_id = #order_id#
+	</select>
+</sqlMap>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<!-- 이 문서는 ibatis에서 처리할 SQL문을 작성하는 문서입니다. -->
+<sqlMap namespace="oneqna">
+
+	<!-- 1:1문의 목록 -->
+	<select id="getAllOneqna" resultClass="OneqnaVO">
+		SELECT ONEQ_ID, ONEQ_TITLE, TO_CHAR(ONEQ_DATE, 'YYYY-MM-DD') ONEQ_DATE, ONEQ_CNT, ONEQ_CONT, ONEQ_GUP, ONEQ_GUP_ROW, ONEQ_SEC, MEM_ID, ONEQ_STATUS 
+		FROM ONEQNA 
+		ORDER BY ONEQ_GUP, ONEQ_GUP_ROW
+	</select>
+	
+	<!-- 1:1문의 등록 -->
+	<insert id="insertOneqnaQ" parameterClass="OneqnaVO">
+		insert into ONEQNA(ONEQ_ID, ONEQ_TITLE, ONEQ_DATE, ONEQ_CNT, ONEQ_CONT, ONEQ_GUP, ONEQ_GUP_ROW, ONEQ_SEC, MEM_ID, ONEQ_STATUS)
+		values(oneq_id_seq.NEXTVAL, #oneq_title#, SYSDATE, 0, #oneq_cont#, oneq_gup_seq.NEXTVAL, 1, NVL(#oneq_sec#,'off'), #mem_id#, #oneq_status#)
+	</insert>
+	
+	<!-- 1:1답변 등록 -->
+	<insert id="insertOneqnaA" parameterClass="OneqnaVO">
+		insert into ONEQNA(ONEQ_ID, ONEQ_TITLE, ONEQ_DATE, ONEQ_CNT, ONEQ_CONT, ONEQ_GUP, ONEQ_GUP_ROW, ONEQ_SEC, MEM_ID, ONEQ_STATUS)
+		values(oneq_id_seq.NEXTVAL, #oneq_title#, SYSDATE, 0, #oneq_cont#, (SELECT oneq_gup FROM ONEQNA WHERE oneq_id=#oneq_id#), 2, (select oneq_sec from oneqna where oneq_id=#oneq_id#), #mem_id#, '답변');
+	</insert>
+	
+	<!-- 1:1문의 디테일 -->
+	<select id="getOneqnaDetail" parameterClass="String" resultClass="OneqnaVO">
+		SELECT ONEQ_ID, ONEQ_TITLE, TO_CHAR(ONEQ_DATE, 'YYYY-MM-DD') ONEQ_DATE, ONEQ_CNT, ONEQ_CONT, ONEQ_GUP, ONEQ_GUP_ROW, ONEQ_SEC, MEM_ID, ONEQ_STATUS
+		FROM ONEQNA 
+		WHERE ONEQ_GUP = (select oneq_gup from ONEQNA where oneq_id=#oneq_id#) ORDER BY ONEQ_GUP_ROW
+	</select>
+	
+	<!-- 1:1 문의 수정 -->
+	<update id="updateOneQ" parameterClass="OneqnaVO">
+		update oneqna set oneq_title=#oneq_title#, oneq_cont=#oneq_cont#, oneq_sec=#oneq_sec# where oneq_id=#oneq_id# 
+	</update> 
+	
+	<!-- 1:1 답변 수정 -->
+	
+	
+</sqlMap>

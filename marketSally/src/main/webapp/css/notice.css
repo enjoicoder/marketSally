@@ -1,0 +1,102 @@
+/* 공지사항 스타일 */
+#notice_list {
+	width: 900px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+#notice_title {
+	font-size: 1.3em;
+	font-weight: 600;
+	text-align: left;
+}
+
+#notice_table {
+	margin: 20px auto;
+	border-collapse: collapse;
+}
+
+#notice_table th {
+	border-top: 2px solid #5f0080;
+	border-bottom: 1px solid black;
+	font-size: 0.8em;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-left: none;
+	padding-right: none;
+}
+
+#notice_table td {
+	border-bottom: 1px solid #dcdcdc;
+	color: #646464;
+	padding-top: 18px;
+	padding-bottom: 18px;
+	padding-left: none;
+	padding-right: none;
+	font-size: 0.8em;
+}
+
+#notice_table2 {
+	margin: 20px auto;
+	border-collapse: collapse;
+}
+
+#notice_table2 th {
+	border-top: 2px solid #5f0080;
+	border-bottom: 1px solid black;
+	font-size: 0.8em;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-left: none;
+	padding-right: none;
+}
+
+#notice_table2 td {
+	border-bottom: 1px solid #dcdcdc;
+	color: #646464;
+	padding-top: 18px;
+	padding-bottom: 18px;
+	padding-left: none;
+	padding-right: none;
+	font-size: 0.8em;
+}
+
+.subject {
+	text-align: left;
+	padding: 5px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#notice_list a:hover {
+	text-decoration: none;
+}
+
+.sub {
+	color: #828282;
+	font-size: 0.6em;
+	padding: 20px;
+}
+
+/* 사이드바 스타일 */
+.sidebar-nav td a {
+	text-decoration: none;
+	color: #999;
+}
+
+.sidebar-nav td a:hover {
+	color: #5f0080;
+}
+
+.sidebar-active {
+	background: #F7F7F7;
+}
+
+#sidebarActiveFont {
+	color: #5f0080;
+}
+
+.hiddenRow {
+    padding: 0 !important;
+}

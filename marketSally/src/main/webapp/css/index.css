@@ -1,0 +1,61 @@
+.product img:hover {
+	transform: scale(1.02);
+	transition: all .3s ease-in-out;
+	cursor: pointer;
+}
+
+.product .cart {
+	background:
+		url(https://s3.ap-northeast-2.amazonaws.com/res.kurly.com/kurly/ico/2021/cart_white_45_45.svg)
+		50% 50% no-repeat;
+	cursor: pointer;
+}
+
+.product img.cart {
+	position: absolute;
+	z-index: 10;
+	top: 65%;
+	right: 2%;
+	width: 52px;
+	height: 52px;
+	border-radius: 100%;
+	opacity: 0.7;
+	border: none;
+}
+
+.slick-prev, .slick-next {
+	font-size: 0;
+	position: absolute;
+	bottom: 100px;
+	color: #fff;;
+	border: 0;
+	background: none;
+	z-index: 1;
+	top: 20px;
+	cursor: pointer;
+}
+
+.slick-prev {
+	left: 20px;
+}
+
+.slick-prev:after {
+	content: "\f104";
+	font: 40px/1 'FontAwesome';
+	color: #7e7e7e;
+}
+
+.slick-next {
+	right: 20px;
+	text-align: right;
+}
+
+.slick-next:after {
+	content: "\f105";
+	font: 40px/1 'FontAwesome';
+	color: #7e7e7e;
+}
+
+.slick-prev:hover:after, .slick-next:hover:after {
+	color: #7e7e7e;
+}

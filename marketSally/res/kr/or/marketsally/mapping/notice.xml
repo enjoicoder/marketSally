@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<!-- 이 문서는 ibatis에서 처리할 SQL문을 작성하는 문서입니다. -->
+<sqlMap namespace="notice">
+
+	<!-- 공지사항 추가 -->
+	<insert id="insertNotice" parameterClass="NoticeVO">
+		INSERT INTO NOTICE(NOTICE_ID, NOTICE_TITLE, NOTICE_DATE, NOTICE_CNT, NOTICE_CONT, MEM_ID) 
+		VALUES(NVL((SELECT MAX(notice_id) FROM notice notice_id),0)+1, #notice_title#, SYSDATE, 0, #notice_cont#, #mem_id# ) 
+	</insert>
+	
+	<!-- 공지사항 목록 -->
+	<select id="getNoticeList" resultClass="NoticeVO">
+		SELECT NOTICE_ID, NOTICE_TITLE, TO_CHAR(NOTICE_DATE, 'YYYY-MM-DD') NOTICE_DATE, NOTICE_CNT, MEM_ID
+		FROM NOTICE
+	</select>
+	
+	<!-- 공지사항 보기 -->
+	<select id="getNoticeDetail" parameterClass="map" resultClass="NoticeVO" >
+		SELECT NOTICE_TITLE, M.MEM_NAME MEM_NAME, TO_CHAR(NOTICE_DATE, 'YYYY-MM-DD') NOTICE_DATE, NOTICE_CNT, NOTICE_CONT, notice_id, n.mem_id mem_id 
+		FROM NOTICE N, MEMBER M
+		WHERE M.MEM_ID=#mem_id# AND NOTICE_ID=#notice_id#
+	</select>	
+	
+	<!-- 공지사항 수정 -->
+	<update id="updateNotice" parameterClass="NoticeVO"> 
+		UPDATE NOTICE SET NOTICE_CONT =#notice_cont# , NOTICE_TITLE = #notice_title#
+		WHERE NOTICE_ID=#notice_id# AND MEM_ID=#mem_id#
+	</update>
+	
+	<!-- 공지사항 삭제 -->
+	<delete id="deleteNotice" parameterClass="NoticeVO">
+		delete from notice where notice_id=#notice_id# and mem_id=#mem_id#
+	</delete>
+		
+</sqlMap>

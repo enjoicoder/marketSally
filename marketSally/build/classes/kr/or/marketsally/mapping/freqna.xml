@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<!-- 이 문서는 ibatis에서 처리할 SQL문을 작성하는 문서입니다. -->
+<sqlMap namespace="freqna">
+
+	<!-- 자주하는질문 추가 -->
+	<insert id="insertFreqna" parameterClass="FreqnaVO">
+		INSERT INTO FREQNA(FREQ_ID, FREQ_CATE, FREQ_CONT, MEM_ID, FREQ_TITLE, FREQ_DATE)
+		VALUES(NVL((SELECT MAX(freq_id) FROM freqna freq_id),0)+1, #freq_cate#, #freq_cont#, #mem_id#, #freq_title#, SYSDATE) 
+	</insert>
+	
+	
+	
+	<!-- 자주하는질문 리스트 출력 -->
+	<select id="getAllFreqna" resultClass="FreqnaVO">
+		SELECT freq_id, freq_cate, freq_title, freq_cont
+		FROM FREQNA
+	</select>
+	
+</sqlMap>

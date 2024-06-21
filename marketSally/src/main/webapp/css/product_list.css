@@ -1,0 +1,14 @@
+/* 카테고리 선택 리스트 */
+#product_list_category{
+	font-size: 0.8em;
+	width : 1050px;
+	margin-left: 0px;
+}
+#product_list_orderby{
+	font-size: 0.8em;
+}
+
+.text-hover-purple a:hover{
+	color: #5f0080;
+	font-weight: bold;
+}
